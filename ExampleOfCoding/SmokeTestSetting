@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using OpenQA.Selenium;
+//КОСТЫЛЬ
+namespace ExampleTest
+{
+    class SmokeTestSettings
+    {
+        private IWebDriver _webDriver;
+    }
+
+    public InitializeSettings()
+    {
+
+        return ;
+    }
+}
