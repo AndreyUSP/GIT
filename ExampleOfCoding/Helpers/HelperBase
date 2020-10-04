@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+
+namespace ExampleTest
+{
+    public class HelperBase
+    {
+        protected IWebDriver _webDriver;
+
+        public HelperBase(IWebDriver _webDriver)
+        {
+            this._webDriver = _webDriver;
+        }
+    }
+}
