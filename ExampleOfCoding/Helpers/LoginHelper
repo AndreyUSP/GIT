@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using OpenQA.Selenium;
+
+namespace ExampleTest.PageObject
+{
+    public class LoginHelper : HelperBase
+    {
+        public LoginHelper(IWebDriver _webdriver) : base(_webdriver)
+        {
+        }
+    }
+}
