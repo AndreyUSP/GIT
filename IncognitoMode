@@ -1,0 +1,9 @@
+/*
+Заходим в браузер Chrome в режиме инкогнито
+*/
+
+ChromeOptions chromeOptions new ChromeOptions();
+chromeOptions.AddArgument("--incognito");
+_driver new ChromeDriver(chromeOptions);
+_driver.Navigate().GoToUrl("https://tver.cian.ru/");
+_driver.Manage().Window.Maximize();
