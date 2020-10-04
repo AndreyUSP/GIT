@@ -1,0 +1,79 @@
+using NUnit.Framework;
+
+namespace ExampleTest
+{
+    public class MeetingListTest : BaseTestSequential
+    {
+        private MainMenu _mainMenu;
+        private MeetingListTestPageObject _meetingList;
+
+
+        public MeetingListTestBehaviorTests()
+        {
+            SmokeTestSettings.InitializeSettings();
+        }
+
+        [Test, Order(1)]
+        [AllureSubSuite("01. Авторизуемся под секретарем")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+        public void LoginAsMember_StandartBehavior()
+        {
+            _mainMenu LoginService.Login(Driver, UserNameForTests.LoginAndPasswordSecretar,
+                UserNameForTests.LoginAndPasswordSecretar);
+        }
+
+        [Test, Order(2)]
+        [AllureSubSuite("02. Переходим к заседаниям")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+        public void MeetingList_WhenNavigate_MeetingAvailible()
+        {
+            _meetingsList = _mainMenu.NavigateToMeetingList();
+            var meetingCards = _meetingList.GetAllCards();
+            Assert.IsNotEmpty(meetingCards, "Meetings is not available");
+        }
+
+        [Test, Order(3)]
+        [AllureSubSuite("03. Проверяем сортировку по дате")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+        public void GetMeetingDates_DatesAreSorted()
+        {
+            var dates = _meetingList.GetMeetingsListDates().ToList();
+            var expectedDates dates.OrderByDescending(x > x);
+            Assert.IsTrue(expectedDates.SequenceEqual(dates), "Meetings list is not sorted by date");
+        }
+
+        [Test, Order(4)]
+        [AllureSubSuite("04. Проверяем скроллинг")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+        public void MeetingList_WhenScroll_NewMeetingIsFatched()
+        {
+            var countBeforeScroll = _meetingList.GetMeetingsListNumbers().Count();
+            _meetingList.ScrollPage();
+            var countAfterScroll = _meetingList.GetMeetingListNumber().Count();
+            Assert.Less(countBeforeScroll, countAfterScroll, "Meetings list scroll failed");
+        }
+        [Test, Order(5)]
+        [AllureSubSuite("05. Выбираем первое заседание")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+        public void MeetingList_WhenSelectedCard_MeetingPageObjectOpening()
+        {
+            var meetingPage = _meetingList.GetFirstCard().Select();
+            var numberFromList = _meetingList.GetMeetingsListNumber().First();
+            var numberFromPage = meetingPage.Meeting.Number;
+            Assert.AreEqual(numberFromList, numberFromPage, "Meetings opening failed");
+
+        }
+        [Test, Order(6)]
+        [AllureSubSuite("06. Применяем быстрый фильтр")]
+        [Description("Test ID: 5318. Заседания в списке.")]
+
+        public void MeetingList_WhenFilterApply_ListFiltered()
+        {
+            _meetingList.ApplyQuickFilterOpened();
+            var statuses = _meetingList.GetMeetingsListStatus().ToList();
+            Assert.IsTrue(statuses.All(x => x.Equals(TestStaticNames.StatusOfMeetingIsOpen)));
+
+
+        }
+    }
+}
