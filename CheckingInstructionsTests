@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using NUnit.Framework;
+
+namespace ExampleTest.Tests
+{[TestFixture]
+    public class CheckingInstructionsTests : BaseTestSequential
+    {
+        [Test]
+        public void LoginAsUser_StandartBehavior_Logined()
+        {
+            var magazine = mainMenu.NavigateToMagazineTab();
+            WaitUntil.WaitSomeInterval(1);
+
+            var actualSortDate = magazine.GetListNewsDates().ToList();
+            var expectedSortDate = actualSortDate.OrderByDescending(x => x);
+            Assert.IsTrue(expectedSortDate.SequenceEqual(actualSortDate), "The sort date is wrong");
+        }
+
+    }
+}
