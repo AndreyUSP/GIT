@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using OpenQA.Selenium;
+
+namespace ExampleTest.PageObject
+{
+    public class MagazinePageObject
+    {
+        private IWebDriver _webDriver;
+
+        public MagazinePageObject(IWebDriver webDriver)
+        {
+            _webDriver = webDriver;
+            WaitUntil.ShouldLocate(_webDriver, "/magazine/");
+
+        }
+        private readonly By _allTheDatesNews = By.CssSelector("span[itemprop 'datePublished']");
+        public IEnumerable<DateTime> GetListNewsDates()
+        {
+            return _webDriver
+                .FindElements(_allTheDatesNews)
+                .Select(x => DateTime.Parse(x.Text));
+        }
+            }
+}
