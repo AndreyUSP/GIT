@@ -18,7 +18,7 @@ namespace ExampleTest
         [Description("Test ID: 5318. Заседания в списке.")]
         public void LoginAsMember_StandartBehavior()
         {
-            _mainMenu LoginService.Login(Driver, UserNameForTests.LoginAndPasswordSecretar,
+            _mainMenu = LoginService.Login(Driver, UserNameForTests.LoginAndPasswordSecretar,
                 UserNameForTests.LoginAndPasswordSecretar);
         }
 
@@ -27,7 +27,7 @@ namespace ExampleTest
         [Description("Test ID: 5318. Заседания в списке.")]
         public void MeetingList_WhenNavigate_MeetingAvailible()
         {
-            _meetingsList = _mainMenu.NavigateToMeetingList();
+            _meetingList = _mainMenu.NavigateToMeetingList();
             var meetingCards = _meetingList.GetAllCards();
             Assert.IsNotEmpty(meetingCards, "Meetings is not available");
         }
@@ -38,7 +38,7 @@ namespace ExampleTest
         public void GetMeetingDates_DatesAreSorted()
         {
             var dates = _meetingList.GetMeetingsListDates().ToList();
-            var expectedDates dates.OrderByDescending(x > x);
+            var expectedDates = dates.OrderByDescending(x => x);
             Assert.IsTrue(expectedDates.SequenceEqual(dates), "Meetings list is not sorted by date");
         }
 
